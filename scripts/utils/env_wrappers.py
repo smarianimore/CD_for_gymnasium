@@ -8,6 +8,18 @@ LABEL_BOUNDARY = '*borders*'
 LABEL_AGENT_WRAPPER = '*A'
 
 
+def env_wrappers_manager(environment):
+    """env_name = environment.spec.id
+    if env_name == 'FrozenLake-v1':
+        environment = FrozenLake_ObservationSpaceWrapper(environment, (3, 3))
+    elif env_name == 'Taxi-v3':
+        environment = Taxi_ObservationSpaceWrapper(environment, (3, 3))
+    else:
+        print(f'Wrapper for {env_name} is not still available')"""
+
+    return environment
+
+
 class FrozenLake_ObservationSpaceWrapper(gym.ObservationWrapper):
     def __init__(self, environment, observation_matrix_shape):
         super().__init__(environment)
@@ -23,7 +35,8 @@ class FrozenLake_ObservationSpaceWrapper(gym.ObservationWrapper):
         # Define a new observation space that includes both the typical and new observations
         self.observation_space = gym.spaces.Dict({
             LABEL_GYM_OBS_PART: self.gym_obs,
-            LABEL_NEW_OBS_PART: gym.spaces.Box(low=-np.inf, high=np.inf, shape=self.observation_matrix_shape, dtype=np.float32)
+            LABEL_NEW_OBS_PART: gym.spaces.Box(low=-np.inf, high=np.inf, shape=self.observation_matrix_shape,
+                                               dtype=np.float32)
         })
 
     def observation(self, obs):
@@ -95,7 +108,8 @@ class Taxi_ObservationSpaceWrapper(gym.ObservationWrapper):
         # Adjust shape according to your data structure; this is just an example
         self.observation_space = gym.spaces.Dict({
             LABEL_GYM_OBS_PART: self.gym_obs,
-            LABEL_NEW_OBS_PART: gym.spaces.Box(low=-np.inf, high=np.inf, shape=self.observation_matrix_shape, dtype=np.float32)
+            LABEL_NEW_OBS_PART: gym.spaces.Box(low=-np.inf, high=np.inf, shape=self.observation_matrix_shape,
+                                               dtype=np.float32)
         })
 
     def observation(self, obs):
@@ -155,6 +169,7 @@ class Taxi_ObservationSpaceWrapper(gym.ObservationWrapper):
 
         return get_obs_matrix(obs)
 
+
 def matrix_assignment_numbers_to_strings(matrix):
     """
     Replace each unique string in the matrix with a unique number.
@@ -180,4 +195,3 @@ def matrix_assignment_numbers_to_strings(matrix):
     number_matrix = np.vectorize(string_to_number.get)(matrix)
 
     return number_matrix
-

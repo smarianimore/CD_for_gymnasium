@@ -4,3 +4,4 @@
 - setup causal discovery: (only the obs matrix or all possible matrix? feature aggregation choice)
 - use the tools provided by stable-baselines3 for plots and evaluations
 - integrate other environments and algorithms
+- finish algorithm wrappers
